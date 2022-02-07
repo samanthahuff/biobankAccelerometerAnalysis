@@ -9,33 +9,59 @@
 
 A tool to extract meaningful health information from large accelerometer datasets. The software generates time-series and summary metrics useful for answering key questions such as how much time is spent in sleep, sedentary behaviour, or doing physical activity.
 
-## Installation
-
+---
+# INSTALLATION
+## Create an isolated environment
 ```bash
-pip install accelerometer
-```
-
-You also need Java 8 (1.8.0) or greater. Check with the following:
-
-```bash
-java -version
-```
-
-You can try the following to check if everything works properly:
-```bash
-# Create an isolated environment
+$ /bin/bash
 $ mkdir test_baa/ ; cd test_baa/
 $ python -m venv baa
 $ source baa/bin/activate
+```
 
-# Install and test
+## Install and test
+```bash
 $ pip install accelerometer
 $ wget -P data/ http://gas.ndph.ox.ac.uk/aidend/accModels/sample.cwa.gz  # download a sample file
 $ accProcess data/sample.cwa.gz
 $ accPlot data/sample-timeSeries.csv.gz
 ```
+---
+
+# DATA PROCESSING AND MODEL DEVELOPMENT
+```bash
+# Preprocessing of weeklong datasets for annotation
+$ fullweek=$(cat dom_left_shank.csv | wc -l)
+$ echo $fullweek
+$ oneday=$((fullweek/7))                     
+$ echo $oneday
+$ head -n $oneday dom_left_shank.csv > dom_left_shank_cropped.csv
+$ cat dom_left_shank_cropped.csv | wc -l  #check cropping worked
+```
 
 
+## Load virtual env
+```bash
+$ cd biobankAccelerometerAnalysis/accelerometer/
+$/bin/bash
+$ source ../test_baa/baa/bin/activate
+```
+## Process data file and extract features
+```bash
+accProcess ../../../data/mqir-souza1/Axivity/PHO/PHO_ax6_cwa_data/P009/P009.cwa --epochPeriod 1 --deleteIntermediateFiles 'False'
+```
+## Train model
+```python
+#open trainmodel.ipynb (redfines trainClassification model to fix bug in accClassification code, needs to use baa kernel)
+trainClassificationModel( \
+    "./activityModels/labelled-acc-epochs.csv", \
+    featuresTxt="./accelerometer/activityModels/features_clipped.txt", \
+    testParticipants="4,5", \
+    outputPredict="./testpredictions2.csv", \
+    rfTrees=1000, rfThreads=1)
+```
+
+---
 ## Usage
 To extract a summary of movement from a raw Axivity accelerometer file (.cwa):
 
