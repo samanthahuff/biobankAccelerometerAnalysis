@@ -29,6 +29,14 @@ $ accPlot data/sample-timeSeries.csv.gz
 ---
 
 # DATA PROCESSING AND MODEL DEVELOPMENT
+
+## Annotating IMU data with video
+
+**In OMGUI:** 
+- Export csv with time in seconds from OMGUI so that ELAN can read the tracks
+
+**In terminal:**
+Only for weeklong datasets that are too big to load in Elan
 ```bash
 # Preprocessing of weeklong datasets for annotation
 $ fullweek=$(cat dom_left_shank.csv | wc -l)
@@ -38,6 +46,27 @@ $ echo $oneday
 $ head -n $oneday dom_left_shank.csv > dom_left_shank_cropped.csv
 $ cat dom_left_shank_cropped.csv | wc -l  #check cropping worked
 ```
+
+**In Elan:** 
+1. Find rough (doesn't have to be exact) offset for video from beginning of filming to calibration (ex: 59890).
+2. Go to drop jumps in first file, select first peak. 
+    a. First select Player 2, have first file selected in drop down menu. After peak selected, click *Apply current offsets*.
+3. Select next file in drop down menu to align next file. Navigate to first peak of drop jumps and select *Apply current offsets*. 
+4. Continue with all four files so that first peaks of drop jumps are all aligned.
+5. Select Player 1. In video, find drop jumps and align so that peak consides with the contact off the drop. 
+6. Make note of all of the offests. Manually set offsets so that they are #3/4-(#5-#1)
+
+Make sure to: 
+- annotate each second and only each second
+- start first annotation, edit annotation time to start at 00:00:00.000.
+    - if possible for last annotation, edit annotation time to be at the end of the xyz trace.
+    - if video ends before xyz trace, than unannotated trace will get the final annotation
+- export data from Elan as a .txt file with the following settings (add master media time offset/ include header lines/ exclude tier names /use both Begin and End time columns/ use hh:mm:ss.ms format)
+
+**In MATLAB:**
+1. Use offset from each file and run AX3_Annotate. 
+2. Check annotated figures to make sure alignment occurred succesfully. 
+3. An annotated .mat file will be saved
 
 
 ## Load virtual env
