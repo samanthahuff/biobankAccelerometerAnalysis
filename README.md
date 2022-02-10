@@ -48,13 +48,13 @@ $ cat dom_left_shank_cropped.csv | wc -l  #check cropping worked
 ```
 
 **In Elan:** 
-1. Find rough (doesn't have to be exact) offset for video from beginning of filming to calibration (ex: 59890).
-2. Go to drop jumps in first file, select first peak. 
-    a. First select Player 2, have first file selected in drop down menu. After peak selected, click *Apply current offsets*.
-3. Select next file in drop down menu to align next file. Navigate to first peak of drop jumps and select *Apply current offsets*. 
-4. Continue with all four files so that first peaks of drop jumps are all aligned.
-5. Select Player 1. In video, find drop jumps and align so that peak consides with the contact off the drop. 
-6. Make note of all of the offests. Manually set offsets so that they are #3/4-(#5-#1)
+1. (*optional*) Find rough (doesn't have to be exact) offset for video from beginning of filming to calibration (ex: 59890).
+2. Go to drop jumps in video. Find first frame where foot has complete contact with the ground. 
+3. Enter media synchronization mode. Select Player 1. *Apply current offsets*.
+4. Select first file in drop down menu, then select Player 2. Find first peak of drop jumps. *Apply current offsets*.
+5. Select next file in drop down menu to align next file. Select Player 2. Navigate to first peak of drop jumps. *Apply current offsets*. 
+6. Continue with all four files so that first peaks of drop jumps are all aligned.
+7. Make note of all of the offests. Manually set offsets so that they are file_offset(#4/5) - video_offset(#3) + beginning_offset(#1)
 
 Make sure to: 
 - annotate each second and only each second
@@ -64,10 +64,9 @@ Make sure to:
 - export data from Elan as a .txt file with the following settings (add master media time offset/ include header lines/ exclude tier names /use both Begin and End time columns/ use hh:mm:ss.ms format)
 
 **In MATLAB:**
-1. Use offset from each file and run AX3_Annotate. 
+1. Use offset from each file and run AX3_Annotate.m. 
 2. Check annotated figures to make sure alignment occurred succesfully. 
 3. An annotated .mat file will be saved
-
 
 ## Load virtual env
 ```bash
