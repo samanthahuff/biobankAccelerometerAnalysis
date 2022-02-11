@@ -48,6 +48,8 @@ $ cat dom_left_shank_cropped.csv | wc -l  #check cropping worked
 ```
 
 **In Elan:** 
+
+*Aligning*
 1. (*optional*) Find rough (doesn't have to be exact) offset for video from beginning of filming to calibration (ex: 59890).
 2. Go to drop jumps in video. Find first frame where foot has complete contact with the ground. 
 3. Enter media synchronization mode. Select Player 1. *Apply current offsets*.
@@ -56,12 +58,21 @@ $ cat dom_left_shank_cropped.csv | wc -l  #check cropping worked
 6. Continue with all four files so that first peaks of drop jumps are all aligned.
 7. Make note of all of the offests. Manually set offsets so that they are file_offset(#4/5) - video_offset(#3) + beginning_offset(#1)
 
-Make sure to: 
-- annotate each second and only each second
-- start first annotation, edit annotation time to start at 00:00:00.000.
-    - if possible for last annotation, edit annotation time to be at the end of the xyz trace.
-    - if video ends before xyz trace, than unannotated trace will get the final annotation
-- export data from Elan as a .txt file with the following settings (add master media time offset/ include header lines/ exclude tier names /use both Begin and End time columns/ use hh:mm:ss.ms format)
+*Annotating*
+
+8. Start first annotation at hand clap calibration and end after devices have been placed and patient is sitting, edit annotation time to start at 00:00:00.000.
+9. Annotate each second and only each second. (It is okay if annotations don't align perfectly with eachother since annotations will be resampled).
+10. The end of the last annotation sets the boundary which will crop the XYZ trace in post processing. 
+11. After annotating, if offsets need to be changed...
+    a. changing video offset does nothing to relative position of annotations and xyz trace, only changes where video overlays.
+    b. changing file offset changes xyz trace relative to annotations.
+    c. if annotations are done based on what is occuring in the video, than xyz trace can be aligned to video post annotations without issue
+12. Export data from Elan as a .txt file with the following settings:
+    - add master media time offset
+    - include header lines
+    - exclude tier names 
+    - use both Begin and End time columns
+    - use hh:mm:ss.ms format
 
 **In MATLAB:**
 1. Use offset from each file and run AX3_Annotate.m. 
