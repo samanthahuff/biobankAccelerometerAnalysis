@@ -56,7 +56,7 @@ $ cat dom_left_shank_cropped.csv | wc -l  #check cropping worked
 4. Select first file in drop down menu, then select Player 2. Find first peak of drop jumps. *Apply current offsets*.
 5. Select next file in drop down menu to align next file. Select Player 2. Navigate to first peak of drop jumps. *Apply current offsets*. 
 6. Continue with all four files so that first peaks of drop jumps are all aligned.
-7. Make note of all of the offests. Manually set offsets so that they are file_offset(#4/5) - video_offset(#3) + beginning_offset(#1)
+7. Make note of all of the offests in Ax6_collection_log by looking at Edit > Linked Files > Linked Secondary Files. Manually set offsets so that they are file_offset(#4/5) - video_offset(#3) + beginning_offset(#1)
 
 *Annotating*
 
